@@ -1,53 +1,28 @@
-# STM32 Lab Exercises | STM32 实验集
+# STM32 Lab Exercises
 
-Complete STM32 lab exercises for Diploma EE students. Each lab includes CubeMX config, HAL code, and wiring diagrams.
+My lab code for Digital Electronics (Diploma EE, TAR UMT KL). Using the STM32F103C8T6 Blue Pill board with STM32CubeIDE and ST-Link V2.
 
-STM32 实验完整代码，每个实验包含 CubeMX 配置、HAL 代码和接线图。
+Each lab folder has the main.c source and a wiring.txt for pin connections.
 
----
+## Labs
 
-## Labs | 实验列表
+- **Lab 01** - LED Blink (GPIO output)
+- **Lab 03** - UART Serial Communication (USART2, printf redirection)
+- **Lab 04** - ADC Read (analog input with potentiometer)
 
-| Lab | Topic | Peripherals |
-|-----|-------|-------------|
-| 01 | LED Blink | GPIO Output |
-| 02 | Button Input | GPIO Input, EXTI |
-| 03 | UART Serial | USART2, printf |
-| 04 | ADC Read | ADC1, Potentiometer |
-| 05 | PWM Output | TIM2, LED brightness |
-| 06 | I2C OLED | I2C1, SSD1306 display |
-| 07 | SPI Sensor | SPI1, temperature sensor |
-| 08 | Timer Interrupt | TIM3, periodic callback |
-| 09 | Multi-task | All peripherals combined |
-| 10 | RTOS Basics | FreeRTOS, task scheduling |
+## Hardware
 
-## Hardware | 硬件
+- STM32F103C8T6 Blue Pill
+- ST-Link V2 clone
+- USB-TTL converter (for UART lab)
+- 10k potentiometer (for ADC lab)
+- Breadboard, LEDs, resistors, jumper wires
 
-- MCU: STM32F103C8T6 (Blue Pill) or STM32F446RE (Nucleo)
-- Debugger: ST-Link V2
-- IDE: STM32CubeIDE
-
-## How to Use | 使用方法
+## How to open
 
 1. Open STM32CubeIDE
-2. Import project: File → Import → Existing Projects
-3. Select the lab folder
+2. File -> Import -> Existing Projects into Workspace
+3. Pick the lab folder
 4. Build and flash
 
-## Wiring | 接线
-
-Each lab folder contains a `wiring.txt` file with pin connections.
-
-## Project Structure | 项目结构
-
-```
-Lab_01_LED_Blink/
-├── Core/Src/main.c        # Main code
-├── Core/Inc/main.h        # Header
-├── .ioc                   # CubeMX config
-└── wiring.txt             # Pin connections
-```
-
-## License
-
-MIT
+Wiring details are in each lab's wiring.txt file.

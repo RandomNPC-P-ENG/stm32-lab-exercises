@@ -1,19 +1,10 @@
-/**
- * Lab 03: UART Serial Communication | UART 串口通信
- * 
- * Objective: Send/receive data via UART using printf
- * Hardware: STM32F103C8T6 + USB-TTL converter
- * 
- * Wiring | 接线:
- *   PA2 (TX) → USB-TTL RX
- *   PA3 (RX) → USB-TTL TX
- *   GND      → USB-TTL GND
- * 
- * CubeMX Config:
- *   USART2: 115200 baud, 8N1
- *   PA2 = USART2_TX
- *   PA3 = USART2_RX
- */
+// Lab 03 - UART Serial
+// Isaac, Diploma EE TAR UMT
+//
+// PA2 (TX) -> USB-TTL RX
+// PA3 (RX) -> USB-TTL TX
+// GND -> USB-TTL GND
+// Baud: 115200, 8N1
 
 #include "main.h"
 #include <stdio.h>
@@ -21,7 +12,7 @@
 
 UART_HandleTypeDef huart2;
 
-// Redirect printf to UART
+// redirect printf to uart
 int __io_putchar(int ch)
 {
     HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, HAL_MAX_DELAY);
@@ -40,18 +31,18 @@ int main(void)
     uint8_t rx_buf[32];
     uint32_t count = 0;
 
-    printf("\r\n=== STM32 UART Lab ===\r\n");
-    printf("Type something and press Enter:\r\n");
+    printf("\r\nSTM32 UART test\r\n");
+    printf("Type something:\r\n");
 
     while (1)
     {
-        printf("\r\n[%lu] Hello from STM32! > ", count++);
-        
-        // Receive until newline
+        printf("\r\n[%lu] > ", count++);
+
         memset(rx_buf, 0, sizeof(rx_buf));
         HAL_UART_Receive(&huart2, rx_buf, sizeof(rx_buf)-1, 5000);
-        
-        printf("\r\nYou said: %s\r\n", rx_buf);
+
+        // rx_buf should be null terminated from the memset above
+        printf("\r\nGot: %s\r\n", rx_buf);
         HAL_Delay(1000);
     }
 }
@@ -89,7 +80,10 @@ void SystemClock_Config(void)
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
-    HAL_RCC_OscConfig(&RCC_OscInitStruct);
+    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+    {
+        // Error_Handler();
+    }
 
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
                                 | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
@@ -97,5 +91,8 @@ void SystemClock_Config(void)
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-    HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+    {
+        // Error_Handler();
+    }
 }

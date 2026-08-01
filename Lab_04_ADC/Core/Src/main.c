@@ -1,19 +1,9 @@
-/**
- * Lab 04: ADC Read | ADC 读取实验
- * 
- * Objective: Read analog voltage using ADC
- * Hardware: STM32F103C8T6 + 10kΩ potentiometer
- * 
- * Wiring | 接线:
- *   PA0 (ADC1_CH0) → Potentiometer wiper (middle pin)
- *   3.3V           → Potentiometer one end
- *   GND            → Potentiometer other end
- * 
- * CubeMX Config:
- *   PA0 = ADC1_IN0
- *   ADC1: Regular, 1 channel, 12-bit, software trigger
- *   USART2: 115200 baud (for display)
- */
+// Lab 04 - ADC Read
+// Isaac, Diploma EE TAR UMT
+//
+// PA0 (ADC1 ch0) -> potentiometer wiper (middle pin)
+// 3.3V -> pot left pin, GND -> pot right pin
+// UART on PA2/PA3 for serial output at 115200
 
 #include "main.h"
 #include <stdio.h>
@@ -47,15 +37,15 @@ int main(void)
     MX_ADC1_Init();
     MX_USART2_UART_Init();
 
-    printf("\r\n=== STM32 ADC Lab ===\r\n");
-    printf("Turn the potentiometer to change voltage\r\n");
+    printf("\r\nADC lab - turn the pot\r\n");
 
     while (1)
     {
         uint16_t adc_raw = ADC_Read();
         float voltage = (adc_raw / 4095.0f) * 3.3f;
-        
-        printf("ADC: %4u  |  Voltage: %.2f V\r\n", adc_raw, voltage);
+
+        // raw=%u  voltage=%.2f
+        printf("ADC: %4u | V: %.2f\r\n", adc_raw, voltage);
         HAL_Delay(500);
     }
 }
@@ -115,7 +105,10 @@ void SystemClock_Config(void)
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
-    HAL_RCC_OscConfig(&RCC_OscInitStruct);
+    if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+    {
+        // Error_Handler();
+    }
 
     RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
                                 | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
@@ -123,5 +116,8 @@ void SystemClock_Config(void)
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-    HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
+    if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+    {
+        // Error_Handler();
+    }
 }
