@@ -1,0 +1,11 @@
+Lab 01: LED Blink Wiring | 接线
+
+STM32F103C8T6 (Blue Pill):
+  PA5  →  220Ω resistor  →  LED (anode)  →  GND (cathode)
+  3.3V →  (not used)
+  GND  →  Common ground
+
+Notes:
+  - Use a 220Ω current-limiting resistor
+  - LED longer leg = anode (+)
+  - LED shorter leg = cathode (-)
