@@ -1,0 +1,12 @@
+Lab 04: ADC Read Wiring | 接线
+
+STM32F103C8T6 (Blue Pill):
+  PA0 (ADC1_CH0)  →  Potentiometer middle pin (wiper)
+  3.3V            →  Potentiometer left pin
+  GND             →  Potentiometer right pin
+
+Optional: PA2 (TX) → USB-TTL RX for serial output
+
+Notes:
+  - ADC range: 0-4095 (12-bit) = 0-3.3V
+  - Turn potentiometer to vary voltage 0-3.3V
